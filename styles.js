@@ -86,7 +86,7 @@ $(document).ready(function () {
 
                     var forecaseDayHumidity = $("<div>").text("Humidity: " + response.main.humidity + "%");
 
-                    $(".forecastDisplayBox").append($("<div>").addClass(" col-2 col-md-2 col-lg-2 border border-primary m-2").append(forecastDay, forecastIcon, forceastDayTemp, forecaseDayHumidity))
+                    $(".forecastBox").append($("<div>").addClass(" col-2 col-md-2 col-lg-2 border border-primary m-2").append(forecastDay, forecastIcon, forceastDayTemp, forecaseDayHumidity))
                 }
             }
     }
@@ -105,14 +105,14 @@ $(document).ready(function () {
         citySearchbutton.addClass("btn btn-info m-1")
         citySearchbutton.text(cityNameInput);
         citySearchbutton.on("click", function () {
-            $(".forecastDisplayBox").html("");
+            $(".forecastBox").html("");
             openWeatherMapCall(cityNameInput);
             forecastData(cityNameInput);
         })
         $("#citySearchList").prepend(citySearchbutton);
     }
     $("#searchbutton").on("click", function () {
-        $(".forecastDisplayBox").html("");
+        $(".forecastBox").html("");
         $(".mainDisplay").show();
         $("#forecastHeader").show();
         $(".forecastBox").show();
