@@ -1,55 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index_styles.css">
-    
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./index_styles.css">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 
-    <title>Get Weather</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <title>Get Weather</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- <a class="navbar-brand" class="text-center text-white bg-dark">Weather Dashboard</a> -->
     <h4 class="text-center" class="text-white h4">Weather Dashboard</h4>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-        </ul>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+      </ul>
     </div>
-</nav>
+  </nav>
 
-<div id="list-example" class="list-group">
-  <a class="list-group-item list-group-item-action" href="#list-item-1">Item 1</a>
-  <a class="list-group-item list-group-item-action" href="#list-item-2">Item 2</a>
-  <a class="list-group-item list-group-item-action" href="#list-item-3">Item 3</a>
-  <a class="list-group-item list-group-item-action" href="#list-item-4">Item 4</a>
-</div>
-<div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
-  <h4 id="list-item-1">Item 1</h4>
-  <p>...</p>
-  <h4 id="list-item-2">Item 2</h4>
-  <p>...</p>
-  <h4 id="list-item-3">Item 3</h4>
-  <p>...</p>
-  <h4 id="list-item-4">Item 4</h4>
-  <p>...</p>
-</div>
+  <div class="container">
+    <div class="row mt-2 ">
+      <div class="col-12 col-sm-4 card float-left">
+        <div class="card-header">
+          <h6>Search for a City:</h6>
+          <div>
+            <input type="text" name="city" style="width: 14rem" class="form-control float-left" id="inputCityName"
+              placeholder="City Name">
+            <button id="searchbutton" type="submit" class="btn btn-primary mb-2 ">Search</button>
+          </div>
+        </div>
+        <div class="list-city mt-2">
+          <ul id="citySearchList" class="list-group list-group-flush border mb-2"></ul>
+          <button id="clearButton" class="btn btn-primary mb-2 float-right">Clear Search</button>
+        </div>
+      </div>
+      <div class="col-12 col-sm-8 border">
+        <div class="row card">
+          <div class="card-body mainDisplay">
+            <div id="cityName" class="mb-2 text-center"></div>
+            <h3 id="currentDate" class="mb-4 text-center"></h3>
+            <p id="temperature"></p>
+            <p id="humidity"></p>
+            <p id="windSpeed"></p>
+            <p id="uvIndex"></p>
+          </div>
+        </div>
+        <div class="row card">
+          <div class="col-12">
+            <div id="forecastHeader" class="card-header">
+              5-Day Forecast</div>
+            <div class="row card-body forecastBox">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 
+  <script src="./styles.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-
-
-
-
-
-<script src="./styles.js"></script>
-      
 </body>
 
 </html>
