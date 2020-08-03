@@ -1,24 +1,23 @@
-const apiKey = "6fed592f4d017f9018485c920aed9ba1";
 $(document).ready(function () {
 
     function getCityHistory() {
-        var history = JSON.parse(localStorage.getItem("citySearchHistory"))
+        var history = JSON.parse(localStorage.getItem("searchHistory"))
         if (history === null) {
             history = [];
         }
         return history;
     }
-    var citySearchHistory = getCityHistory();
-    for (var i = 0; i < citySearchHistory.length; i++) {
-        generateCityBtn(citySearchHistory[i]);
+    var searchHistory = getCityHistory();
+    for (var i = 0; i < searchHistory.length; i++) {
+        generateCityBtn(searchHistory[i]);
     }
     var currentDayNow;
     setInterval(() => {
         currentDayNow = moment().format("MMMM Do YYYY");
     }, 1000)
 
-    function openWeatherMapCall(cityNameInput) {
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityNameInput + "&units=imperial&appid=" + apiKey;
+    function openWeatherMapCall(cityInput) {
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&units=imperial&appid=6fed592f4d017f9018485c920aed9ba1";
         return $.ajax({
             url: queryURL,
             method: "GET",
@@ -48,7 +47,7 @@ $(document).ready(function () {
         uvIndexRender(latitude, longitude)
     }
     function uvIndexRender(latitude, longitude) {
-        let uvqueryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + longitude + "&lon=" + latitude
+        let uvqueryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=6fed592f4d017f9018485c920aed9ba1" + "&lat=" + longitude + "&lon=" + latitude
         $.ajax({
             url: uvqueryURL,
             method: "GET"
@@ -64,8 +63,8 @@ $(document).ready(function () {
         });
 
     }
-    function forecastData(cityNameInput) {
-        var forcastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityNameInput + "&units=imperial&appid=" + apiKey
+    function forecastData(cityInput) {
+        var forcastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=imperial&appid=6fed592f4d017f9018485c920aed9ba1"
         return $.ajax({
             url: forcastQueryURL,
             method: "GET",
@@ -82,55 +81,55 @@ $(document).ready(function () {
                     var getForecastIcon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
                     var forecastIcon = $("<img>").attr("src", getForecastIcon);
 
-                    var forceastDayTemp = $("<div>").text("Temp(F): " + response.main.temp);
+                    var forecastTemp = $("<div>").text("Temp(F): " + response.main.temp);
 
-                    var forecaseDayHumidity = $("<div>").text("Humidity: " + response.main.humidity + "%");
+                    var forecastHumidity = $("<div>").text("Humidity: " + response.main.humidity + "%");
 
-                    $(".forecastBox").append($("<div>").addClass(" col-2 col-md-2 col-lg-2 border border-primary m-2").append(forecastDay, forecastIcon, forceastDayTemp, forecaseDayHumidity))
+                    $(".forecastBox").append($("<div>").addClass(" col-2 col-md-2 col-lg-2 border border-primary m-2").append(forecastDay, forecastIcon, forecastTemp, forecastHumidity))
                 }
             }
     }
     function storeCities() {
         var cityName = $("#inputCityName").val().trim().toLowerCase();
-        citySearchHistory.push(cityName.toString())
-        citySearchHistory = citySearchHistory.slice(-5);
-        console.log(citySearchHistory);
+        searchHistory.push(cityName.toString())
+        searchHistory = searchHistory.slice(-5);
+        console.log(searchHistory);
 
-        localStorage.setItem("citySearchHistory", JSON.stringify(citySearchHistory))
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory))
     }
 
-    function generateCityBtn(cityNameInput) {
-        var citySearchbutton = $("<button>");
-        citySearchbutton.attr("data-name", cityNameInput);
-        citySearchbutton.addClass("btn btn-info m-1")
-        citySearchbutton.text(cityNameInput);
-        citySearchbutton.on("click", function () {
+    function generateCityBtn(cityInput) {
+        var searchButton = $("<button>");
+        searchButton.attr("data-name", cityInput);
+        searchButton.addClass("btn btn-info m-1")
+        searchButton.text(cityInput);
+        searchButton.on("click", function () {
             $(".forecastBox").html("");
-            openWeatherMapCall(cityNameInput);
-            forecastData(cityNameInput);
+            openWeatherMapCall(cityInput);
+            forecastData(cityInput);
         })
-        $("#citySearchList").prepend(citySearchbutton);
+        $("#citySearchList").prepend(searchButton);
     }
     $("#searchbutton").on("click", function () {
         $(".forecastBox").html("");
         $(".mainDisplay").show();
         $("#forecastHeader").show();
         $(".forecastBox").show();
-        var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
-        if (cityNameInput == "") {
+        var cityInput = $("#inputCityName").val().trim().toLowerCase();
+        if (cityInput == "") {
             alert("Field cannot be empty")
             return;
         } else {
-            openWeatherMapCall(cityNameInput);
-            forecastData(cityNameInput);
+            openWeatherMapCall(cityInput);
+            forecastData(cityInput);
         }
         storeCities();
-        if (citySearchHistory.length <5) {
-            generateCityBtn(cityNameInput);
+        if (searchHistory.length <5) {
+            generateCityBtn(cityInput);
         }
         else {
             $("#citySearchList button").last().remove();
-            generateCityBtn(cityNameInput)
+            generateCityBtn(cityInput)
         }
         $("#inputCityName").val("");
 
